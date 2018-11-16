@@ -1,0 +1,47 @@
+{% extends "master.html" %}
+
+{% block title %}- Home{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    {% from "_formhelpers.html" import render_field %}
+    <div class="row">
+        <form action="." method="POST">
+            {{ render_field(form.leagueID, class="form-control", placeholder="Enter your league ID") }}
+            {{ form.csrf_token }}
+          <button type="submit" class="btn btn-success">Get League Info</button>
+        </form>
+    </div>
+
+
+    {% if league %}
+        <div class="row align-items-center">
+            <div class="col">
+                League Name: {{ league.name }}
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col">
+                Number of Teams: {{ league.numTeams }}
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col">
+                First Year: {{ league.firstYear }}
+            </div>
+        </div>
+
+        {% for team in league.teams %}
+            <div class="row align-items-center">
+                <div class="col">
+                    Owner: {{ team.ownerName }}
+                </div>
+                <div class="col">
+                    Team Name: {{ team.name }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
